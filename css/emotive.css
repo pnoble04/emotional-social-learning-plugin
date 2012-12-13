@@ -1,0 +1,15 @@
+.emotionContainer {
+    width: 225px;
+}
+
+.oneEmotion {
+    margin-bottom: 1em;
+}
+
+.emotionTexts {
+    height: 3em;
+}
+
+.positive {
+    float:right;
+}
