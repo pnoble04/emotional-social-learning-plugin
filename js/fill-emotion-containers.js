@@ -1,8 +1,6 @@
 (function() {
   var addSlidersToEmotionContainers, fillAllEmotionContainers, fillCommunityEmotionContainers, fillInvididualEmotionContainers, getEmotionStateArray, getEmotionStateOfEverybodyAndShowIt, getTwoCorrespondingPicturesOfSlider, sendEmotionStateArray, sendEmotions, sendEmotionsOnSubmitButtonClick, setSizeOfEmotionPictures, setupSlidersToChangePicturesOnChange;
 
-  console.log($('.emotionContainer'));
-
   fillAllEmotionContainers = function() {
     fillInvididualEmotionContainers();
     return fillCommunityEmotionContainers();
@@ -10,7 +8,7 @@
 
   fillInvididualEmotionContainers = function() {
     var emotionContainerHTML;
-    emotionContainerHTML = "<div class='oneEmotion'>            <div class='emotionPictures'>                <img src='http://dl.dropbox.com/u/34637013/uni/design-new-learning-environments/images/frustrated.jpg' alt='frustated' class='firstEmotion' />                <img src='http://dl.dropbox.com/u/34637013/uni/design-new-learning-environments/images/unchallenged.jpg' alt='unchallenged' class='secondEmotion' />            </div>        <div class='emotionSlider'></div>        </div>        <div class='oneEmotion'>            <div class='emotionPictures'>                <img src='http://dl.dropbox.com/u/34637013/uni/design-new-learning-environments/images/bored.jpg' alt='bored' class='firstEmotion' />                <img src='http://dl.dropbox.com/u/34637013/uni/design-new-learning-environments/images/excited.jpg' alt='excited' class='secondEmotion' />            </div>            <div class='emotionSlider'></div>        </div>        ";
+    emotionContainerHTML = "<div class='oneEmotion'>            <div class='emotionPictures'>                <img src='http://dl.dropbox.com/u/34637013/uni/design-new-learning-environments/images/frustrated.jpg' alt='frustated' class='firstEmotion' />                <img src='http://dl.dropbox.com/u/34637013/uni/design-new-learning-environments/images/unchallenged.jpg' alt='unchallenged' class='secondEmotion' />            </div>            <select class='emotionSelect'>              <option value='extremely frustrated'>Extremely Frustrated</option>              <option value='very frustrated'>Very Frustrated</option>              <option value='frustrated'>Frustrated</option>              <option value='quite frustrated'>Quite Frustrated</option>              <option value='slightly frustrated'>Slightly Frustrated</option>              <option value='neutral' selected='selected'>Neutral</option>              <option value='slightly unchallenged'>Slightly Unchallenged</option>              <option value='quite unchallenged' >Quite Unchallenged</option>              <option value='unchallenged'>Unchallenged</option>              <option value='very unchallenged'>Very Unchallenged</option>              <option value='extremely unchallenged'>Extremely Unchallenged</option>            </select>        </div>        <div class='oneEmotion'>            <div class='emotionPictures'>                <img src='http://dl.dropbox.com/u/34637013/uni/design-new-learning-environments/images/bored.jpg' alt='bored' class='firstEmotion' />                <img src='http://dl.dropbox.com/u/34637013/uni/design-new-learning-environments/images/excited.jpg' alt='excited' class='secondEmotion' />            </div>                        <select class='emotionSelect'>              <option value='extremely bored'>Extremely Bored</option>              <option value='very bored'>Very Bored</option>              <option value='bored'>Bored</option>              <option value='quite bored'>Quite Bored</option>              <option value='slightly bored'>Slightly Bored</option>              <option value='neutral' selected='selected'>Neutral</option>              <option value='slightly excited'>Slightly Excited</option>              <option value='quite excited' >Quite Excited</option>              <option value='excited'>Excited</option>              <option value='very excited'>Very Excited</option>              <option value='extremely excited'>Extremely Excited</option>            </select>        </div>        ";
     return $('.emotionContainer').html(emotionContainerHTML);
   };
 
@@ -21,19 +19,25 @@
   };
 
   addSlidersToEmotionContainers = function() {
-    return $('.emotionSlider').slider({
-      min: 0,
-      max: 10
-    });
+    var selectForm, selectForms, _i, _len, _results;
+    selectForms = $('select.emotionSelect');
+    _results = [];
+    for (_i = 0, _len = selectForms.length; _i < _len; _i++) {
+      selectForm = selectForms[_i];
+      _results.push($(selectForm).selectToUISlider({
+        labels: 0
+      }).hide());
+    }
+    return _results;
   };
 
   setupSlidersToChangePicturesOnChange = function() {
-    $(".emotionSlider").on("slide slidechange", function(event, ui) {
+    $(".ui-slider").on("slide slidechange", function(event, ui) {
       var emotionPictures;
       emotionPictures = getTwoCorrespondingPicturesOfSlider(ui.handle);
       return setSizeOfEmotionPictures(emotionPictures, ui.value);
     });
-    return $('.emotionSlider').slider("option", "value", 5);
+    return $('.ui-slider').slider("option", "value", 5);
   };
 
   getTwoCorrespondingPicturesOfSlider = function(sliderElement) {
@@ -54,7 +58,6 @@
 
   sendEmotions = function() {
     var emotionStateArray;
-    console.log("send emotions");
     emotionStateArray = getEmotionStateArray();
     return sendEmotionStateArray(emotionStateArray);
   };
@@ -67,7 +70,6 @@
       emotionPicture = emotionPictures[_i];
       opacityArray.push(parseFloat($(emotionPicture).css('opacity')));
     }
-    console.log(opacityArray);
     return opacityArray;
   };
 
@@ -82,7 +84,6 @@
   };
 
   window.emotionStateUpdated = function(newEmotionState) {
-    console.log("received");
     return window.showEmotionState(newEmotionState);
   };
 
