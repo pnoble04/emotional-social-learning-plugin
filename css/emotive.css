@@ -1,15 +1,30 @@
 .emotionContainer {
-    width: 225px;
+    width: 175px;
 }
 
 .oneEmotion {
     margin-bottom: 1em;
 }
 
-.emotionTexts {
-    height: 3em;
+.communityEmotion {
+    width: 155px;
+    height: 87px;
+    margin-bottom: 1em;
 }
 
-.positive {
+.emotionPictures {
+    height: 5em;
+}
+
+.emotionPictures img{
+    height: 70px;
+}
+
+.secondEmotion {
     float:right;
+}
+
+#submitFeelings {
+    margin-left: 50px;
+    float: right;
 }
